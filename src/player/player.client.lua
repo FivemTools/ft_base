@@ -47,7 +47,7 @@ function Player:Set(...)
 
   if count == 1 and type(args[1]) == "table" then
 
-    for name, data in pairs(args[1]) do
+    for name, value in pairs(args[1]) do
       self[name] = value
       update[name] = value
     end

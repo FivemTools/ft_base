@@ -36,8 +36,6 @@ function Player:Save(...)
       end
     end
 
-    tprint(secure)
-
     if number >= 1 then
       MySQL.Sync.execute("UPDATE players SET " .. str_query .. " WHERE identifier = @identifier", secure)
     else
@@ -97,7 +95,7 @@ function Player:Set(...)
   if count == 1 and type(args[1]) == "table" then
 
     local save = {}
-    for name, data in pairs(args[1]) do
+    for name, value in pairs(args[1]) do
       table.insert(save, name)
       self[name] = value
     end
