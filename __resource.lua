@@ -9,14 +9,33 @@ dependencies {
   "mysql-async",
 }
 
-client_scripts {}
+client_scripts {
+  "src/player/player.client.lua",
+}
 
 server_scripts {
+  "@mysql-async/lib/MySQL.lua", -- MySQL
+  "src/utils.server.lua",
+  "settings.server.lua",
 
-    "@mysql-async/lib/MySQL.lua", -- MySQL
+  --
+  -- Player
+  --
+  "src/player/player.server.lua",
+  "src/player/players.server.lua",
+
+
+  --
+  -- Debug
+  --
+  "src/debug/debug.server.lua",
 
 }
 
 exports {}
 
-server_exports {}
+server_exports {
+  "GetPlayerFromIdentifier",
+  "GetPlayerFromId",
+  "GetPlayers",
+}
