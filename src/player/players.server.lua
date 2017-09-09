@@ -102,7 +102,6 @@ AddEventHandler('ft_base:updatePlayer', function(data)
     print("Client only")
   end
 
-  tprint(data)
   local player = Players[source]
   player:Set(data)
 
