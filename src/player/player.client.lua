@@ -39,7 +39,7 @@ function Player:Get(...)
 end
 
 -- Set player atributs
-function Player:Set(...)
+function Player:LocalSet(...)
 
   local args = {...}
   local count = #args
@@ -52,7 +52,7 @@ function Player:Set(...)
       update[name] = value
     end
 
-    TriggerServerEvent('ft_base:updatePlayer', update)
+    return update
 
   elseif count == 2 then
 
@@ -61,12 +61,53 @@ function Player:Set(...)
     self[name] = value
     update[name] = value
 
-    TriggerServerEvent('ft_base:updatePlayer', update)
+    return update
 
   else
 
     return false
 
+  end
+
+end
+
+
+function Player:Set(...)
+
+  local update = self:Set(...)
+
+  if save ~= false and save ~= nil then
+    TriggerServerEvent('ft_base:updatePlayer', update)
+  end
+
+end
+
+-- Save data in Database
+function Player:Save(...)
+
+  local args = {...}
+  local count = #args
+  local update = {}
+
+  if count == 1 and type(args[1]) == "table" then
+
+    for _, name in pairs(args[1]) do
+      update[name] = self[name]
+    end
+
+  elseif count == 1 then
+
+    local name = args[1]
+    update[name] = self[name]
+
+  else
+
+    return false
+  end
+
+  -- Send to server
+  if update ~= nil then
+    TriggerServerEvent('ft_base:updatePlayer', update)
   end
 
 end

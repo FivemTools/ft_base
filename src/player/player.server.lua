@@ -86,8 +86,7 @@ function Player:Get(...)
 
 end
 
--- Set player atributs
-function Player:Set(...)
+function Player:LocalSet(...)
 
   local args = {...} -- Get all arguments
   local count = #args -- Count number arguments
@@ -100,7 +99,8 @@ function Player:Set(...)
       self[name] = value
     end
 
-    self:Save(save) -- Save in Database
+    return save
+
 
   elseif count == 2 then
 
@@ -113,5 +113,13 @@ function Player:Set(...)
     return false
 
   end
+
+end
+
+-- Set player atributs
+function Player:Set(...)
+
+  local save = self:LocalSet(...)
+  self:Save(save) -- Save in Database
 
 end
