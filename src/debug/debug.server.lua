@@ -8,6 +8,8 @@
 RegisterServerEvent("ft_base:debug")
 AddEventHandler('ft_base:debug', function(value)
 
+  print("---------[Debug]---------")
   tprint(value)
+  print("-------------------------")
 
 end)
