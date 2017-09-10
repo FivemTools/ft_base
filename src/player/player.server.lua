@@ -90,23 +90,24 @@ function Player:LocalSet(...)
 
   local args = {...} -- Get all arguments
   local count = #args -- Count number arguments
+  local save = {}
+  local update = {}
 
   if count == 1 and type(args[1]) == "table" then
 
-    local save = {}
     for name, value in pairs(args[1]) do
       table.insert(save, name)
       self[name] = value
+      update[name] = value
     end
-
-    return save
-
 
   elseif count == 2 then
 
     local name = args[1]
     local value = args[2]
+    table.insert(save, name)
     self[name] = value
+    update[name] = value
 
   else
 
@@ -114,12 +115,18 @@ function Player:LocalSet(...)
 
   end
 
+  return {
+    update = update,
+    save = save,
+  }
+
 end
 
 -- Set player atributs
 function Player:Set(...)
 
-  local save = self:LocalSet(...)
-  self:Save(save) -- Save in Database
+  local data = self:LocalSet(...)
+  TriggerClientEvent("ft_base:SetLocalPlayer", self.source, data.update)
+  self:Save(data.save) -- Save in Database
 
 end
