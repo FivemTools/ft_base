@@ -94,8 +94,8 @@ end
 --
 
 -- Update Player
-RegisterServerEvent("ft_base:updatePlayer")
-AddEventHandler('ft_base:updatePlayer', function(data)
+RegisterServerEvent("ft_base:SetPlayer")
+AddEventHandler('ft_base:SetPlayer', function(data)
 
   local source = source
   if source == -1 then
@@ -107,9 +107,23 @@ AddEventHandler('ft_base:updatePlayer', function(data)
 
 end)
 
+-- Update local Player
+RegisterServerEvent("ft_base:LocalSetPlayer")
+AddEventHandler('ft_base:LocalSetPlayer', function(data)
+
+  local source = source
+  if source == -1 then
+    print("Client only")
+  end
+
+  local player = Players[source]
+  player:LocalSet(data)
+
+end)
+
 -- Event is emited after client is 100% loaded games
-RegisterServerEvent("ft_base:onClientReady")
-AddEventHandler('ft_base:onClientReady', function()
+RegisterServerEvent("ft_base:OnClientReady")
+AddEventHandler('ft_base:OnClientReady', function()
 
   local source = source
   local player = {}
@@ -123,6 +137,7 @@ AddEventHandler('ft_base:onClientReady', function()
       player = GetPlayerFromIdentifier(identifier) -- Select player in db
     end
 
+    player.source = source
     AddPlayer(source, player)
 
   else
@@ -132,10 +147,10 @@ AddEventHandler('ft_base:onClientReady', function()
   end
 
   -- Send to client
-  TriggerClientEvent("ft_base:initPlayer", source, player)
+  TriggerClientEvent("ft_base:InitPlayer", source, player)
 
   -- Send playerReadyToJoin event
-  TriggerClientEvent("ft_base:playerReadyToJoin", source)
-  TriggerEvent("ft_base:playerReadyToJoin", source)
+  TriggerClientEvent("ft_base:PlayerReadyToJoin", source)
+  TriggerEvent("ft_base:PlayerReadyToJoin", source)
 
 end)
