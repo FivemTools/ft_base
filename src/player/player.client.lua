@@ -74,10 +74,10 @@ end
 
 function Player:Set(...)
 
-  local update = self:Set(...)
+  local update = self:LocalSet(...)
 
-  if save ~= false and save ~= nil then
-    TriggerServerEvent('ft_base:updatePlayer', update)
+  if update ~= false and update ~= nil then
+    TriggerServerEvent('ft_base:SetPlayer', update)
   end
 
 end
@@ -107,7 +107,7 @@ function Player:Save(...)
 
   -- Send to server
   if update ~= nil then
-    TriggerServerEvent('ft_base:updatePlayer', update)
+    TriggerServerEvent('ft_base:SetPlayer', update)
   end
 
 end
@@ -123,8 +123,8 @@ Citizen.CreateThread(function()
 
     if NetworkIsSessionStarted() then
 
-      TriggerServerEvent('ft_base:onClientReady')
-      TriggerEvent('ft_base:onClientReady')
+      TriggerServerEvent('ft_base:OnClientReady')
+      TriggerEvent('ft_base:OnClientReady')
       break
 
     end
@@ -132,11 +132,38 @@ Citizen.CreateThread(function()
   end
 end)
 
+-- Update Player
+RegisterNetEvent("ft_base:SetPlayer")
+AddEventHandler('ft_base:SetPlayer', function(data)
+
+  local source = source
+  if source == -1 then
+    print("Server only")
+  end
+
+  Player:Set(data)
+
+end)
+
+-- Update Local Player
+RegisterNetEvent("ft_base:SetLocalPlayer")
+AddEventHandler('ft_base:SetLocalPlayer', function(data)
+
+  local source = source
+  local data = data
+  if source == -1 then
+    print("Server only")
+  end
+
+  Player:LocalSet(data)
+  TriggerServerEvent('ft_base:debug', data)
+
+end)
+
 -- Init client
-RegisterNetEvent("ft_base:initPlayer")
-AddEventHandler('ft_base:initPlayer', function(data)
+RegisterNetEvent("ft_base:InitPlayer")
+AddEventHandler('ft_base:InitPlayer', function(data)
 
   Player = setmetatable(data, Player)
-  Player:Set("cash", 5000)
 
 end)
