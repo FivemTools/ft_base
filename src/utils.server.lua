@@ -26,7 +26,7 @@ function tprint(tbl, indent)
       elseif type(v) == "function" then
         print(formatting .. "function")
       else
-        print(formatting .. tostring(v))
+        print(formatting .. tostring(v) .. " (" .. type(v) .. ")")
       end
     end
   elseif type(tbl) == "boolean" then
