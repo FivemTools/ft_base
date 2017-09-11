@@ -6,6 +6,7 @@
 --
 
 Players = {}
+PlayerDropCallback = {}
 
 --
 -- Functions
@@ -80,6 +81,11 @@ function GetPlayerFromId(id)
 
 end
 
+-- Get player by serverId (source)
+function GetPlayerFromServerId(source)
+  return Players[source]
+end
+
 -- Create player in database
 function CreatePlayer(identifier)
 
@@ -87,6 +93,11 @@ function CreatePlayer(identifier)
   local result = MySQL.Sync.execute("INSERT INTO players (`identifier`, `createdAt`) VALUES (@identifier, @date)", { ['@identifier'] = identifier, ['@date'] = date } )
   return result
 
+end
+
+-- Add callback on player drop
+function AddPlayerDropCallback(callback)
+  table.insert(PlayerDropCallback, callback)
 end
 
 --
@@ -152,5 +163,23 @@ AddEventHandler('ft_base:OnClientReady', function()
   -- Send playerReadyToJoin event
   TriggerClientEvent("ft_base:PlayerReadyToJoin", source)
   TriggerEvent("ft_base:PlayerReadyToJoin", source)
+
+end)
+
+-- Event before player leave
+AddEventHandler('playerDropped', function()
+
+  local source = source
+
+  -- Remove in player list
+  if PlayerExist(source) then
+
+    local player = Players[source]
+    for _, callback in pairs(PlayerDropCallback) do
+      callback(player)
+    end
+    RemovePlayer(source)
+
+  end
 
 end)
