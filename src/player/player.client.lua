@@ -34,6 +34,7 @@ function Player:Get(...)
   else
 
     return false
+
   end
 
 end
@@ -103,6 +104,7 @@ function Player:Save(...)
   else
 
     return false
+
   end
 
   -- Send to server
@@ -111,6 +113,25 @@ function Player:Save(...)
   end
 
 end
+
+-- Get Palyer pos
+function Player:PlayerPos()
+
+  local player = GetPlayerPed(-1)
+  local pos = GetEntityCoords(player, true)
+  local heading = GetEntityHeading(player)
+
+  local data = {
+    posX = pos.x,
+    posY = pos.y,
+    posZ = pos.z,
+    heading = heading,
+  }
+
+  return data
+
+end
+
 
 --
 -- Events
@@ -156,7 +177,6 @@ AddEventHandler('ft_base:SetLocalPlayer', function(data)
   end
 
   Player:LocalSet(data)
-  TriggerServerEvent('ft_base:debug', data)
 
 end)
 
