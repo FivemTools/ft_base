@@ -5,19 +5,13 @@
 -- @Source: https://github.com/FivemTools/ft_base
 --
 
+AddPlayerDropCallback(function(player)
 
-RegisterServerEvent("ft_base:onResourceReady")
-AddEventHandler('ft_base:onResourceReady', function(data)
-
-  AddPlayerDropCallback(function(player)
-
-    player:Save({
-      "posX",
-      "posY",
-      "posZ",
-      "heading",
-    })
-
-  end)
+  player:Save({
+    "posX",
+    "posY",
+    "posZ",
+    "heading",
+  })
 
 end)
