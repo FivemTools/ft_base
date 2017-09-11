@@ -13,9 +13,8 @@ function sendPos()
     while true do
 
       Citizen.Wait(60000 * Settings.sendPos or 1)
-
       local data = Player:PlayerPos()
-      Player:LocalSetPlayer(data)
+      Player:LocalSet(data)
       TriggerServerEvent("ft_base:LocalSetPlayer", data)
 
     end
@@ -32,15 +31,16 @@ function savePos()
     while true do
 
       Citizen.Wait(60000 * Settings.savePos or 10)
-
-      local data = Player:PlayerPos()
-      Player:Save(data)
-      TriggerServerEvent("ft_base:debug", "Save player")
+      Player:Save({
+        "posX",
+        "posY",
+        "posZ",
+        "heading",
+      })
 
     end
 
   end)
-
 
 end
 
