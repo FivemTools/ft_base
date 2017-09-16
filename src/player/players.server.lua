@@ -57,7 +57,7 @@ end
 function GetPlayerFromIdentifier(identifier)
 
   local player = nil
-  local data = MySQL.Sync.fetchAll("SELECT * FROM players WHERE identifier = @identifier", { ['@identifier'] = identifier })
+  local data = MySQL.Sync.fetchAll("SELECT * FROM " .. Settings.database.players .. " WHERE identifier = @identifier", { ['@identifier'] = identifier })
 
   if data[1] ~= nil then
     player = setmetatable(data[1], Player)
@@ -71,7 +71,7 @@ end
 function GetPlayerFromId(id)
 
   local player = nil
-  local data = MySQL.Sync.fetchAll("SELECT * FROM players WHERE id = @id", { ['@id'] = id })
+  local data = MySQL.Sync.fetchAll("SELECT * FROM " .. Settings.database.players .. " WHERE id = @id", { ['@id'] = id })
 
   if data[1] ~= nil then
     player = setmetatable(data[1], Player)
@@ -90,7 +90,7 @@ end
 function CreatePlayer(identifier)
 
   local date = os.date("%Y-%m-%d %X")
-  local result = MySQL.Sync.execute("INSERT INTO players (`identifier`, `createdAt`) VALUES (@identifier, @date)", { ['@identifier'] = identifier, ['@date'] = date } )
+  local result = MySQL.Sync.execute("INSERT INTO " .. Settings.database.players .. " (`identifier`, `createdAt`) VALUES (@identifier, @date)", { ['@identifier'] = identifier, ['@date'] = date } )
   return result
 
 end

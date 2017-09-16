@@ -37,7 +37,7 @@ function Player:Save(...)
     end
 
     if number >= 1 then
-      MySQL.Sync.execute("UPDATE players SET " .. str_query .. " WHERE identifier = @identifier", secure)
+      MySQL.Sync.execute("UPDATE " .. Settings.database.players .. " SET " .. str_query .. " WHERE identifier = @identifier", secure)
     else
       return false
     end
@@ -48,7 +48,7 @@ function Player:Save(...)
 
     if name ~= "id" and name ~= "identifier" then
       secure["@" .. name] = self[name]
-      MySQL.Sync.execute("UPDATE players SET " .. name .. " = @" .. name .. " WHERE identifier = @identifier", secure)
+      MySQL.Sync.execute("UPDATE " .. Settings.database.players .. " SET " .. name .. " = @" .. name .. " WHERE identifier = @identifier", secure)
     else
       return false
     end

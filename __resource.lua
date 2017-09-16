@@ -6,8 +6,10 @@
 --
 
 dependencies {
+
   "mysql-async",
   "spawnmanager",
+
 }
 
 client_scripts {
@@ -19,6 +21,7 @@ client_scripts {
 
   -- Spawn
   "src/spawn/spawn.client.lua",
+
 }
 
 server_scripts {
@@ -45,8 +48,10 @@ server_scripts {
 exports {}
 
 server_exports {
+
   "GetPlayerFromIdentifier",
   "GetPlayerFromServerId",
   "GetPlayerFromId",
   "GetPlayers",
+
 }
