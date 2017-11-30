@@ -1,18 +1,18 @@
 --
 -- @Project: FiveM Tools
 -- @Author: Samuelds
--- @License: GNU General Public License v3.0
--- @Source: https://github.com/FivemTools/ft_base
+-- @License: No licence
 --
 
 Settings = {
-  defaultSpawn = {
-    posX = 0,
-    posY = 0,
-    posZ = 0,
-    heading = 0,
-    model = "a_m_y_skater_01",
+  default_spawn = {
+    pos_x = -1037.94,
+    pos_y = -2738.05,
+    pos_z = 20.17,
+    heading = 326.94,
+    model = "mp_m_freemode_01",
   },
   sendPos = 1, -- minutes
   savePos = 10, -- minutes
+
 }

@@ -1,12 +1,11 @@
 --
 -- @Project: FiveM Tools
 -- @Author: Samuelds
--- @License: GNU General Public License v3.0
--- @Source: https://github.com/FivemTools/ft_base
+-- @License: No licence
 --
 
 -- Print table
-function tprint(tbl, indent)
+function TablePrint(tbl, indent)
 
   if type(tbl) == "table" then
     if not indent then indent = 0 end
@@ -14,7 +13,7 @@ function tprint(tbl, indent)
       formatting = string.rep("  ", indent) .. k .. ": "
       if type(v) == "table" then
         print(formatting)
-        tprint(v, indent + 1)
+        TablePrint(v, indent + 1)
       elseif type(v) == "boolean" then
         if v then
           print(formatting .. "true")
@@ -40,7 +39,15 @@ function tprint(tbl, indent)
   elseif type(tbl) == "function" then
     print("function")
   else
-    print(tostring(tbl))
+    print(tostring(tbl)  .. " (" .. type(tbl) .. ")")
   end
+
+end
+
+-- Round number
+function Round(num, numDecimalPlaces)
+
+  local mult = 10^(numDecimalPlaces or 0)
+  return math.floor(num * mult + 0.5) / mult
 
 end
